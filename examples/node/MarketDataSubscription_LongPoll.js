@@ -22,10 +22,11 @@ function subscribe()
                 { security: 'GOOG US Equity', correlationId: 1, fields: ['LAST_PRICE'] }
               ],
         json: true,
-        agentOptions: opt
+        agentOptions: opt,
+        pool: { maxSockets: 1 }
     }, function (error, response, body) {
         if (error) {
-            console.log(err.message);
+            console.log(error.message);
             process.exit();
         }
         console.log('Subscribed.');
@@ -39,10 +40,11 @@ function poll()
     request.get({
         url: util.format('%s/subscription?pollid=%d', url, counter),
         json: true,
-        agentOptions: opt
+        agentOptions: opt,
+        pool: { maxSockets: 1 }
     }, function (error, response, body) {
         if (error) {
-            console.log(err.message);
+            console.log(error.message);
             process.exit();
         }
         console.log('Response: ' + counter);
@@ -63,10 +65,11 @@ function unsubscribe()
     request.post({
         url: url + '/subscription?action=stop',
         json: true,
-        agentOptions: opt
+        agentOptions: opt,
+        pool: { maxSockets: 1 }
     }, function (error, response, body) {
         if (error) {
-            console.log(err.message);
+            console.log(error.message);
             process.exit();
         }
         console.log('Unsubscribed.');
